@@ -5,19 +5,39 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
+import java.util.List;
 
 @SpringBootApplication
-public class SpringDataJdbcApplication implements CommandLineRunner {
+public class SpringDataJdbcApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringDataJdbcApplication.class, args);
+	private static EmployeeDAOInterface<EmployeeDetails> empDAO;
+
+	public SpringDataJdbcApplication(EmployeeDAOInterface<EmployeeDetails> empDAO){
+		this.empDAO = empDAO;
 	}
 
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	public static void main(String[] args) {
 
-	@Override
-	public void run(String... args) throws Exception {
+		SpringApplication.run(SpringDataJdbcApplication.class, args);
+
+		System.out.println("\n**********************Employee List*******************\n");
+
+		List<EmployeeDetails> employees = empDAO.list();
+
+		for(EmployeeDetails row: employees){
+			System.out.println("Employee ID: "+row.getEmployeeId());
+			System.out.println("First Name: " + row.getFirstName());
+			System.out.println("Last Name:" + row.getLastName());
+			System.out.println("Designation: " + row.getDesignation());
+			System.out.println();
+		}
+
+	}
+
+
+
+//	@Override
+	//public void run(String... args) throws Exception {
 		// create a table
 	/*	String query ="create table if not exists EmployeeDetails (\n" +
 				"\t\t\t\t employeeId int primary key,\n" +
@@ -61,5 +81,5 @@ public class SpringDataJdbcApplication implements CommandLineRunner {
 //			System.out.println(emp.toString());
 //		}
 //		System.out.println("\n**********************\n");
-	}
+	//}
 }
