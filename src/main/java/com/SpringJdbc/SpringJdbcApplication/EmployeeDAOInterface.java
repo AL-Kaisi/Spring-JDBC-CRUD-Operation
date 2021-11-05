@@ -1,8 +1,12 @@
 package com.SpringJdbc.SpringJdbcApplication;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeDAOInterface<Table> {
 
     List<Table> list();
+
+    Optional<Table> getById(int id);
 
 }

@@ -19,19 +19,21 @@ public class EmployeeDetails {
     @Column("designation")
     private String designation;
 
-    public EmployeeDetails(){
+    public EmployeeDetails() {
 
     }
-    public EmployeeDetails(Integer employeeId,String firstName,String lastName,String designation){
-            this.employeeId = employeeId;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.designation = designation;
+
+    public EmployeeDetails(Integer employeeId, String firstName, String lastName, String designation) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.designation = designation;
     }
 
-    static EmployeeDetails create(Integer employeeId,String firstName,String lastName,String designation){
-        return new EmployeeDetails(employeeId,firstName,lastName,designation);
+    static EmployeeDetails create(Integer employeeId, String firstName, String lastName, String designation) {
+        return new EmployeeDetails(employeeId, firstName, lastName, designation);
     }
+
     public int getEmployeeId() {
         return employeeId;
     }

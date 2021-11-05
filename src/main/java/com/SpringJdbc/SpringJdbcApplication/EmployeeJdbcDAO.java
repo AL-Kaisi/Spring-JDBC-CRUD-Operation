@@ -3,15 +3,17 @@ package com.SpringJdbc.SpringJdbcApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class EmployeeJdbcDAO implements EmployeeDAOInterface<EmployeeDetails>{
+public class EmployeeJdbcDAO implements EmployeeDAOInterface<EmployeeDetails> {
 
     private JdbcTemplate jdbcTemplate;
 
-    RowMapper<EmployeeDetails> rowMap  = (result,num) -> {
+    RowMapper<EmployeeDetails> rowMap = (result, num) -> {
         EmployeeDetails employees = new EmployeeDetails();
 
         employees.setEmployeeId(result.getInt("employeeId"));
@@ -22,16 +24,28 @@ public class EmployeeJdbcDAO implements EmployeeDAOInterface<EmployeeDetails>{
         return employees;
     };
 
-    public EmployeeJdbcDAO(JdbcTemplate jdbcTemplate){
+    public EmployeeJdbcDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public List<EmployeeDetails> list() {
         String query = "SELECT * FROM EmployeeDetails";
-        return  jdbcTemplate.query(query,rowMap);
+        return jdbcTemplate.query(query, rowMap);
     }
 
+    @Override
+    public Optional<EmployeeDetails> getById(int id) {
+        String query = "SELECT * FROM EmployeeDetails WHERE employeeId = ?";
+        EmployeeDetails employee = null;
 
+        try {
+            employee = jdbcTemplate.queryForObject(query, rowMap, id);
 
+        } catch (DataAccessException dataAccessException) {
+            System.out.println(dataAccessException);
+
+        }
+        return Optional.ofNullable(employee);
+    }
 }
