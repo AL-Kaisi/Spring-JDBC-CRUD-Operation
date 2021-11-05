@@ -9,7 +9,7 @@ public class EmployeeDetails {
 
     @Id
     @Column("employeeId")
-    private int employeeId;
+    private Integer employeeId;
 
 
     @Column("firstName")
@@ -34,11 +34,11 @@ public class EmployeeDetails {
         return new EmployeeDetails(employeeId, firstName, lastName, designation);
     }
 
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
     }
 

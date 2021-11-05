@@ -48,4 +48,26 @@ public class EmployeeJdbcDAO implements EmployeeDAOInterface<EmployeeDetails> {
         }
         return Optional.ofNullable(employee);
     }
+
+    @Override
+    public void addNewEmployee(EmployeeDetails employeeDetails) {
+
+        String insertQuery = "INSERT INTO EmployeeDetails(firstName,lastName,Designation) " +
+                "VALUES (?,?,?)";
+        jdbcTemplate.update(insertQuery, employeeDetails.getFirstName(),
+                employeeDetails.getLastName(),
+                employeeDetails.getDesignation());
+    }
+
+    @Override
+    public void updateEmployee(EmployeeDetails employeeDetails) {
+        String updateQuery = "UPDATE EmployeeDetails SET firstName = ?, " +
+                "lastName = ?, designation = ? where employeeId = ? ";
+
+        jdbcTemplate.update(updateQuery,
+                employeeDetails.getFirstName(),
+                employeeDetails.getLastName(),
+                employeeDetails.getDesignation(),
+                employeeDetails.getEmployeeId());
+    }
 }

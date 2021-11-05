@@ -9,4 +9,8 @@ public interface EmployeeDAOInterface<Table> {
 
     Optional<Table> getById(int id);
 
+    void addNewEmployee(Table table);
+
+    void updateEmployee(Table table);
+
 }

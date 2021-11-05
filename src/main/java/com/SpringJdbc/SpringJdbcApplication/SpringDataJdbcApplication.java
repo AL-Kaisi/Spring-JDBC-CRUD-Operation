@@ -14,8 +14,7 @@ public class SpringDataJdbcApplication {
 
     private static EmployeeDAOInterface<EmployeeDetails> empDAO;
 
-    public SpringDataJdbcApplication(EmployeeDAOInterface<EmployeeDetails> empDAO)
-    {
+    public SpringDataJdbcApplication(EmployeeDAOInterface<EmployeeDetails> empDAO) {
         this.empDAO = empDAO;
     }
 
@@ -23,12 +22,34 @@ public class SpringDataJdbcApplication {
 
         SpringApplication.run(SpringDataJdbcApplication.class, args);
 
+        System.out.println("\n**********************Adding and updating*******************\n");
+
+        EmployeeDetails newEmp = new EmployeeDetails(null, "Roger", "Smith",
+                "Automation Engineer");
+        empDAO.addNewEmployee(newEmp);
+
+        EmployeeDetails empOne = empDAO.getById(1).get();
+        empOne.setDesignation("Automation Engineer");
+        empOne.setFirstName("Jim");
+
+        empDAO.updateEmployee(empOne);
+
+        List<EmployeeDetails> employees = empDAO.list();
+
+        for (EmployeeDetails row : employees){
+            System.out.println("Employee ID:" + row.getEmployeeId());
+            System.out.println("First Name: " + row.getFirstName());
+            System.out.println("lastName: " + row.getLastName());
+            System.out.println("Designation: " + row.getDesignation());
+            System.out.println();
 
 
-        System.out.println("\n**********************Getting data by Id*******************\n");
+        }
 
-        Optional<EmployeeDetails> employee = empDAO.getById(2);
-        System.out.println(employee.get());
+//        System.out.println("\n**********************Getting data by Id*******************\n");
+//
+//        Optional<EmployeeDetails> employee = empDAO.getById(2);
+//        System.out.println(employee.get());
 
         //System.out.println("\n**********************Employee List*******************\n");
 
